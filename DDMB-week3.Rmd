@@ -1,0 +1,142 @@
+---
+title: "Data Driven Decision-Making in Business"
+subtitle: "Week 3"
+author: "Meike Morren" # fill in your name
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("cluster")
+#install.packages("klaR")
+#install.packages("dbscan") 
+#install.packages("fpc")
+#install.packages("amap")
+library(factoextra) # used for determining optimal amount of clusters
+library(gridExtra)
+library(cluster)
+library(klaR)
+library(dbscan)
+library(fpc)
+library(amap) 
+```
+
+
+You have encountered several clustering techniques, distance measures, linkage methods and methods to determine the optimal number of clusters. In this week you will integrate all your knowledge.
+
+You will use the same data set as last week. First read in the datafile `supermarket-sales.csv` which you can find on canvas. For more information, visit: [kaggle](https://www.kaggle.com/aungpyaeap/supermarket-sales). Explore the datafile. In particular, observe how many observations, what is the unit of observation, and how many metric variables are included in the datafile.
+
+```{r}
+# insert your code here
+```
+
+# K-modes
+In contrast to the other methods, K-modes is only to be performed on categorical data.  You do not have to recode the variables to numeric like we did when calculating the Manhattan distances. K-modes only takes the modes (i.e. the most frequent values) which can also be performed on character data. Perform the analysis on the categorical variables available in the dataset:
+
+- Branch
+- City
+- Customer.type
+- Product.line
+- Payment
+
+Use the function `kmodes` with `iter.max = 100` for $k$ is 2, 3 or 4 (use the argument `modes =`). Include the whole dataset! Create a `barplot` to visualize how many data points are assigned to which cluster. Inspect the three different barplots and explain what you see, is the distribution even for all tried $k$-values? 
+
+```{r}
+# insert your code here
+```
+
+# K-mediods 
+Using `gross.income`, `Rating`, `Tax.5.`,`Unit.price`, you will explore cosine versus Euclidean distances using K-mediods. First you need to calculate the cosine distance matrix using your code from week 2. Save the cosine distance matrix. Include the whole dataset! Also, don't forget to standardize the variables! 
+
+```{r}
+# insert your code here
+```
+
+We saw last week that cosine distances are able to compare variables that differ in magnitude. In more technical terms, the cosine distance do not include the length of the vector while the Euclidean distances do. Using K-means we know that cosine distances work better when you include multiple variables with different magnitude (even after being standardized). Before you start, take a moment to reflect on what you expect how cosine and Euclidean distance differ in results when using K-mediods.
+
+K-mediods is very similar to K-means but takes the mediods as cluster centers. Inside the `fviz_nbclust` function, you can use `pam` to calculate the results using K-mediods, and use `diss` to include the cosine distance you've calculated above. Compare the methods `silhouette`, `wss` (=elbow method) and `gap`. The gap method might take some time to compute (i.e a few minutes). When using `gap`, use `nboot = 50` to limit the estimation time. Make sure to use the standardized values of `gross.income`, `Rating`, `Tax.5.`,`Unit.price`.
+
+```{r}
+# insert your code here
+```
+
+Plot the results. You can bind these (saved) plots together in a so-called grid using `grid.arrange` and its argument `nrow`. This implies we expect two grids where each grid contains 3 plots aligned on one row. One grid for the Euclidean distance and one for the cosine distance. Each individual plot should be a one of the methods `wss`, `silhouette` or `gap.` 
+
+```{r}
+# insert your code here
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Discuss your findings and reason about possible values for K (K stands for amount of clusters).
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+# DBSCAN
+Next we will implement DBSCAN (Density-based spatial clustering of applications with noise) on the same standardized variables from above. You will obtain the knee-plot to determine the optimal epsilon value. Use the function `dbscan::kNNdistplot` and call the function 3 times for 3 different $k$ values and show the results. Also, draw a horizontal line in the plot at the location of the knee using `abline` on the next line after using the function `dbscan.` Use 2,3, and 4 as reasonable values for $K$ clusters. 
+
+```{r}
+# insert your code here
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Interpret the differences in epsilon values across the k-solutions, and explain what the optimal epsilon value for k=3 means.
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+## Use epsilon value and experiment with MinPts
+Now that we have determined the best epsilon value given $k$ we will use the function `fpc::dbscan` to cluster the data points. Choose the most suitable $K$-value and experiment with the parameter `MinPts`. The documentation might give you a hint for a reasonable value, try 4 different `MinPts` value and report the effect of this parameter on the outcome. We expect 1 grid with 2x2 plots.(hint: use `grid.arrange`).
+
+```{r}
+# insert your code here
+```
+
+
+# Compare fit
+
+## Optimal number of clusters
+Finally, you will compare K-means with DBSCAN using the elbow method, gap statistic, and silhouette score. Your goal will be to find the optimal number of clusters, given a distance measure that does justice to the complexity of the data, and a clustering method that suits the data best. You can estimate K-means using `fviz_nbclust` (see assignment 2), with repeating the analysis 25 times (to get to the best solution, see explanation in lecture 3). Use the argument `nstart = 25` to do this, and don't forget to set the seed `set.seed(1234)` on the line before you call `fviz_nbclust`. For the gap statistic you can use again `nboot = 50` to shorten the estimation time. 
+
+```{r}
+# insert your code here
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### What is the most optimal number of clusters? Which distance measure and clustering method give the most clear results?
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+## Cluster, train, split and evaluate.
+Now that we have found a suitable value for $K$, a corresponding value for `eps` and `MinPts`, we can split the dataframe into a training set containing 85% of the data and a test set being 15% of the data. Use `set.seed(1234)` like before. We will "train" the cluster algorithm on the training set and then inspect the assignment of the data points on the test set. What you do notice? Is the distribution of data points according to what you expected? Explain by visualizing (e.g. a `barplot`) how many data points are assigned to which cluster.
+
+```{r}
+# insert your code here
+```
+
+We assume the distribution of the training data and the test data are similar, however, this might very well not be the case. If not, what would be a logical next step? You don't have to actually do the next step.
+
+## FINAL DISCUSSION OF RESULTS INSIDE RMARKDOWN: 
+### Write a conclusion about the various methods used and conclude your findings. (10-12 sentence max.) In your conclusion consider at least the following attributes:
+
+- *K-modes, K-means and their differences*
+- *Euclidean vs Manhattan distance*
+- *DBSCAN, the epsilon value and the min points parameter *
+- *optimal number of clusters and why (give at least 1 argument that supports your finding)*
+- *a possible next step in your analysis based on the results*
+- *conclude your findings*
+  
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
