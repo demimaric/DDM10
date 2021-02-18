@@ -26,8 +26,8 @@ You have encountered several clustering techniques, distance measures, linkage m
 You will use the same data set as last week. First read in the datafile `supermarket-sales.csv` which you can find on canvas. For more information, visit: [kaggle](https://www.kaggle.com/aungpyaeap/supermarket-sales). Explore the datafile. In particular, observe how many observations, what is the unit of observation, and how many metric variables are included in the datafile.
 
 ```{r}
-# testen 2
-print("hallotest")
+df <- read.csv("supermarket-sales.csv")
+colnames(df)
 ```
 
 # K-modes
@@ -42,19 +42,34 @@ In contrast to the other methods, K-modes is only to be performed on categorical
 Use the function `kmodes` with `iter.max = 100` for $k$ is 2, 3 or 4 (use the argument `modes =`). Include the whole dataset! Create a `barplot` to visualize how many data points are assigned to which cluster. Inspect the three different barplots and explain what you see, is the distribution even for all tried $k$-values? 
 
 ```{r}
+<<<<<<< HEAD
 df <- read.csv("supermarket-sales.csv")
 
+=======
+>>>>>>> 3159f35ffe8bb7568912430e7653d230fbc1b625
 catdata <- na.omit(df[, c("Branch", "City", "Customer.type", "Product.line", "Payment")])
 kmodes(catdata, modes = 2,iter.max = 100)
 kmodes(catdata, modes = 3,iter.max = 100)
 kmodes(catdata, modes = 4,iter.max = 100)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3159f35ffe8bb7568912430e7653d230fbc1b625
 ```
 
 # K-mediods 
 Using `gross.income`, `Rating`, `Tax.5.`,`Unit.price`, you will explore cosine versus Euclidean distances using K-mediods. First you need to calculate the cosine distance matrix using your code from week 2. Save the cosine distance matrix. Include the whole dataset! Also, don't forget to standardize the variables! 
 
 ```{r}
-# insert your code here
+df$ZGross.income <- scale(df$gross.income)
+df$ZRating <- scale(df$Rating)
+df$ZTax.5. <- scale(df$Tax.5.)
+df$ZUnit.price <- scale(df$Unit.price)
+
+dfz <- na.omit(df[,c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")])
+Matrix <- t(as.matrix(dfz))
+cosine_dist <- 1-crossprod(Matrix) /(sqrt(colSums(Matrix^2)%*%t(colSums(Matrix^2))))
+cosine_dist <- as.dist(cosine_dist)
 ```
 
 We saw last week that cosine distances are able to compare variables that differ in magnitude. In more technical terms, the cosine distance do not include the length of the vector while the Euclidean distances do. Using K-means we know that cosine distances work better when you include multiple variables with different magnitude (even after being standardized). Before you start, take a moment to reflect on what you expect how cosine and Euclidean distance differ in results when using K-mediods.
@@ -62,13 +77,25 @@ We saw last week that cosine distances are able to compare variables that differ
 K-mediods is very similar to K-means but takes the mediods as cluster centers. Inside the `fviz_nbclust` function, you can use `pam` to calculate the results using K-mediods, and use `diss` to include the cosine distance you've calculated above. Compare the methods `silhouette`, `wss` (=elbow method) and `gap`. The gap method might take some time to compute (i.e a few minutes). When using `gap`, use `nboot = 50` to limit the estimation time. Make sure to use the standardized values of `gross.income`, `Rating`, `Tax.5.`,`Unit.price`.
 
 ```{r}
-# insert your code here
+f1se<-fviz_nbclust(dfz, pam, method = "silhouette",
+                  diss = dist(cosine_dist)) +
+  labs(subtitle = "Silhouette method")
+
+f1ee<-fviz_nbclust(dfz, pam, method = "wss",
+                  diss = dist(cosine_dist)) +
+  labs(subtitle = "Elbow method")
+
+f1ge<-fviz_nbclust(dfz, pam, nboot = 50, method = "gap_stat",
+                  diss = dist(cosine_dist)) +
+  labs(subtitle = "GAP method")
 ```
 
 Plot the results. You can bind these (saved) plots together in a so-called grid using `grid.arrange` and its argument `nrow`. This implies we expect two grids where each grid contains 3 plots aligned on one row. One grid for the Euclidean distance and one for the cosine distance. Each individual plot should be a one of the methods `wss`, `silhouette` or `gap.` 
 
 ```{r}
-# insert your code here
+grid.arrange(f1se, nrow=1)
+grid.arrange(f1ee, nrow=1)
+grid.arrange(f1ge, nrow=1)
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
@@ -84,7 +111,8 @@ Plot the results. You can bind these (saved) plots together in a so-called grid 
 Next we will implement DBSCAN (Density-based spatial clustering of applications with noise) on the same standardized variables from above. You will obtain the knee-plot to determine the optimal epsilon value. Use the function `dbscan::kNNdistplot` and call the function 3 times for 3 different $k$ values and show the results. Also, draw a horizontal line in the plot at the location of the knee using `abline` on the next line after using the function `dbscan.` Use 2,3, and 4 as reasonable values for $K$ clusters. 
 
 ```{r}
-# insert your code here
+dbscan::kNNdistplot(df[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")], k =2)
+abline(h=0.4, lty = 2)
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
