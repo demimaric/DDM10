@@ -42,19 +42,11 @@ In contrast to the other methods, K-modes is only to be performed on categorical
 Use the function `kmodes` with `iter.max = 100` for $k$ is 2, 3 or 4 (use the argument `modes =`). Include the whole dataset! Create a `barplot` to visualize how many data points are assigned to which cluster. Inspect the three different barplots and explain what you see, is the distribution even for all tried $k$-values? 
 
 ```{r}
-<<<<<<< HEAD
-df <- read.csv("supermarket-sales.csv")
-
-=======
->>>>>>> 3159f35ffe8bb7568912430e7653d230fbc1b625
 catdata <- na.omit(df[, c("Branch", "City", "Customer.type", "Product.line", "Payment")])
 kmodes(catdata, modes = 2,iter.max = 100)
 kmodes(catdata, modes = 3,iter.max = 100)
 kmodes(catdata, modes = 4,iter.max = 100)
-<<<<<<< HEAD
-=======
 
->>>>>>> 3159f35ffe8bb7568912430e7653d230fbc1b625
 ```
 
 # K-mediods 
@@ -112,7 +104,11 @@ Next we will implement DBSCAN (Density-based spatial clustering of applications 
 
 ```{r}
 dbscan::kNNdistplot(df[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")], k =2)
-abline(h=0.4, lty = 2)
+abline(h=0.2, lty = 2)
+dbscan::kNNdistplot(df[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")], k =3)
+abline(h=0.2, lty = 2)
+dbscan::kNNdistplot(df[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")], k =4)
+abline(h=0.5, lty = 2)
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
