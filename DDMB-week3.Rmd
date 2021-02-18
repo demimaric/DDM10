@@ -138,7 +138,17 @@ Now that we have determined the best epsilon value given $k$ we will use the fun
 Finally, you will compare K-means with DBSCAN using the elbow method, gap statistic, and silhouette score. Your goal will be to find the optimal number of clusters, given a distance measure that does justice to the complexity of the data, and a clustering method that suits the data best. You can estimate K-means using `fviz_nbclust` (see assignment 2), with repeating the analysis 25 times (to get to the best solution, see explanation in lecture 3). Use the argument `nstart = 25` to do this, and don't forget to set the seed `set.seed(1234)` on the line before you call `fviz_nbclust`. For the gap statistic you can use again `nboot = 50` to shorten the estimation time. 
 
 ```{r}
-# xx
+set.seed(1234)
+fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "silhouette") +
+  labs(subtitle = "Silhouette method")
+
+set.seed(09122020)
+fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "wss") +
+  labs(subtitle = "Elbow method")
+
+set.seed(09122020)
+fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "gap") +
+  labs(subtitle = "Gap method")
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
