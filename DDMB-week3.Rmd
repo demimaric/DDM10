@@ -138,11 +138,11 @@ set.seed(1234)
 fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "silhouette") +
   labs(subtitle = "Silhouette method")
 
-set.seed(09122020)
+set.seed(1234)
 fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "wss") +
   labs(subtitle = "Elbow method")
 
-set.seed(09122020)
+set.seed(1234)
 fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "gap") +
   labs(subtitle = "Gap method")
 ```
