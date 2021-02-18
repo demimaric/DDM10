@@ -43,7 +43,6 @@ Use the function `kmodes` with `iter.max = 100` for $k$ is 2, 3 or 4 (use the ar
 
 ```{r}
 catdata <- na.omit(df[, c("Branch", "City", "Customer.type", "Product.line", "Payment")])
-set.seed(123)
 kmodes(catdata, modes = 2,iter.max = 100)
 kmodes(catdata, modes = 3,iter.max = 100)
 kmodes(catdata, modes = 4,iter.max = 100)
@@ -104,7 +103,8 @@ grid.arrange(f1ge, nrow=1)
 Next we will implement DBSCAN (Density-based spatial clustering of applications with noise) on the same standardized variables from above. You will obtain the knee-plot to determine the optimal epsilon value. Use the function `dbscan::kNNdistplot` and call the function 3 times for 3 different $k$ values and show the results. Also, draw a horizontal line in the plot at the location of the knee using `abline` on the next line after using the function `dbscan.` Use 2,3, and 4 as reasonable values for $K$ clusters. 
 
 ```{r}
-# insert your code here
+dbscan::kNNdistplot(df[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")], k =2)
+abline(h=0.4, lty = 2)
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
