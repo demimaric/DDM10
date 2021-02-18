@@ -39,7 +39,7 @@ In contrast to the other methods, K-modes is only to be performed on categorical
 - Product.line
 - Payment
 
-Use the function `kmodes` with `iter.max = 100` for $k$ is 2, 3 or 4 (use the argument `modes =`). Include the whole dataset! Create a `barplot` to visualize how many data points are assigned to which cluster. Inspect the three different barplots and explain what you see, is the distribution even for all tried $k$-values? 
+Use the function `kmodes` with `iter.max = 100` for $k$ is 2, 3 or 4 (use the argument `modes =`). Include the whole dataset! Create a `barplot` to visualize how many data points are assigned to which cluster. Inspect the three different barplots and explain what you see, is the distribution even for all tried $k$-values? ?
 
 ```{r}
 <<<<<<< HEAD
