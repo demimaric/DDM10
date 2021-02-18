@@ -26,8 +26,8 @@ You have encountered several clustering techniques, distance measures, linkage m
 You will use the same data set as last week. First read in the datafile `supermarket-sales.csv` which you can find on canvas. For more information, visit: [kaggle](https://www.kaggle.com/aungpyaeap/supermarket-sales). Explore the datafile. In particular, observe how many observations, what is the unit of observation, and how many metric variables are included in the datafile.
 
 ```{r}
-# testen 2
-print("hallotest")
+df<-read.csv("supermarket-sales.csv")
+str(df)
 ```
 
 # K-modes
