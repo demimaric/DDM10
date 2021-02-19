@@ -6,21 +6,18 @@ output: pdf_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-<<<<<<< HEAD
 install.packages("cluster")
 install.packages("klaR")
 install.packages("dbscan") 
 install.packages("fpc")
 install.packages("amap")
 library(factoextra)
-=======
 #install.packages("cluster")
 #install.packages("klaR")
 #install.packages("dbscan") 
 #install.packages("fpc")
 #install.packages("amap")
 library(factoextra) # used for determining optimal amount of clusters
->>>>>>> 45f1c8d98bd5e1ec38605c2f178d3c8810ddf5f0
 library(gridExtra)
 library(cluster)
 library(klaR)
