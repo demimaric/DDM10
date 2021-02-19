@@ -1,16 +1,17 @@
 ---
 title: "Data Driven Decision-Making in Business"
 subtitle: "Week 3"
-author: "Meike Morren" # fill in your name
+author: "Meike Morren" # Demi, Lucas, Quinten team 10
 output: pdf_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-install.packages("cluster")
-install.packages("klaR")
-install.packages("dbscan") 
-install.packages("fpc")
-install.packages("amap")
+knitr::opts_knit$set(root.dir = "~/github/DDM10") 
+#install.packages("cluster")
+#install.packages("klaR")
+#install.packages("dbscan") 
+#install.packages("fpc")
+#install.packages("amap")
 library(factoextra)
 #install.packages("cluster")
 #install.packages("klaR")
@@ -150,7 +151,7 @@ db <- fpc::dbscan(dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")]
 f4<-fviz_cluster(db, dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],stand = FALSE, geom = "point", main = "minPts = 20")
 
 grid.arrange(f1, f2, f3, f4, ncol=2)
->>>>>>> 45f1c8d98bd5e1ec38605c2f178d3c8810ddf5f0
+>>>>>>> 
 ```
 
 
