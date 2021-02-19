@@ -151,7 +151,6 @@ db <- fpc::dbscan(dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")]
 f4<-fviz_cluster(db, dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],stand = FALSE, geom = "point", main = "minPts = 20")
 
 grid.arrange(f1, f2, f3, f4, ncol=2)
->>>>>>> 
 ```
 
 
