@@ -6,12 +6,21 @@ output: pdf_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+<<<<<<< HEAD
 install.packages("cluster")
 install.packages("klaR")
 install.packages("dbscan") 
 install.packages("fpc")
 install.packages("amap")
 library(factoextra)
+=======
+#install.packages("cluster")
+#install.packages("klaR")
+#install.packages("dbscan") 
+#install.packages("fpc")
+#install.packages("amap")
+library(factoextra) # used for determining optimal amount of clusters
+>>>>>>> 45f1c8d98bd5e1ec38605c2f178d3c8810ddf5f0
 library(gridExtra)
 library(cluster)
 library(klaR)
@@ -133,7 +142,21 @@ abline(h=0.54, lty = 2)
 Now that we have determined the best epsilon value given $k$ we will use the function `fpc::dbscan` to cluster the data points. Choose the most suitable $K$-value and experiment with the parameter `MinPts`. The documentation might give you a hint for a reasonable value, try 4 different `MinPts` value and report the effect of this parameter on the outcome. We expect 1 grid with 2x2 plots.(hint: use `grid.arrange`).
 
 ```{r}
+<<<<<<< HEAD
 
+=======
+dfx<-na.omit(df[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")])
+db <- fpc::dbscan(dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],eps=.5,MinPts = 5)
+f1<-fviz_cluster(db, dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")], stand = FALSE, geom = "point", main = "minPts = 5")
+db <- fpc::dbscan(dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],eps=.5,MinPts = 10)
+f2<-fviz_cluster(db, dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")], stand = FALSE, geom = "point", main = "minPts = 10")
+db <- fpc::dbscan(dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],eps=.5,MinPts = 15)
+f3<-fviz_cluster(db, dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],stand = FALSE, geom = "point", main = "minPts = 15")
+db <- fpc::dbscan(dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],eps=.5,MinPts = 20)
+f4<-fviz_cluster(db, dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],stand = FALSE, geom = "point", main = "minPts = 20")
+
+grid.arrange(f1, f2, f3, f4, ncol=2)
+>>>>>>> 45f1c8d98bd5e1ec38605c2f178d3c8810ddf5f0
 ```
 
 
