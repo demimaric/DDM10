@@ -11,7 +11,7 @@ install.packages("klaR")
 install.packages("dbscan") 
 install.packages("fpc")
 install.packages("amap")
-library(factoextra) # used for determining optimal amount of clusters
+library(factoextra)
 library(gridExtra)
 library(cluster)
 library(klaR)
@@ -133,7 +133,7 @@ abline(h=0.54, lty = 2)
 Now that we have determined the best epsilon value given $k$ we will use the function `fpc::dbscan` to cluster the data points. Choose the most suitable $K$-value and experiment with the parameter `MinPts`. The documentation might give you a hint for a reasonable value, try 4 different `MinPts` value and report the effect of this parameter on the outcome. We expect 1 grid with 2x2 plots.(hint: use `grid.arrange`).
 
 ```{r}
-# insert your code here
+
 ```
 
 
@@ -143,21 +143,17 @@ Now that we have determined the best epsilon value given $k$ we will use the fun
 Finally, you will compare K-means with DBSCAN using the elbow method, gap statistic, and silhouette score. Your goal will be to find the optimal number of clusters, given a distance measure that does justice to the complexity of the data, and a clustering method that suits the data best. You can estimate K-means using `fviz_nbclust` (see assignment 2), with repeating the analysis 25 times (to get to the best solution, see explanation in lecture 3). Use the argument `nstart = 25` to do this, and don't forget to set the seed `set.seed(1234)` on the line before you call `fviz_nbclust`. For the gap statistic you can use again `nboot = 50` to shorten the estimation time. 
 
 ```{r}
-<<<<<<< HEAD
-# xx
-=======
 set.seed(1234)
-fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "silhouette") +
+fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, nstart = 25, method = "silhouette") +
   labs(subtitle = "Silhouette method")
 
 set.seed(1234)
-fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "wss") +
+fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, nstart = 25, method = "wss") +
   labs(subtitle = "Elbow method")
 
 set.seed(1234)
-fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, method = "gap") +
-  labs(subtitle = "Gap method")
->>>>>>> 57ace31cd1616253e163c9c2d4373e19792e21ed
+fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, nstart = 25, nboot = 50, method = "gap_stat") +
+  labs(subtitle = "GAP method")
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
