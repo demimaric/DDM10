@@ -15,6 +15,7 @@ This week you will perform discriminant analysis on the mobile banking dataset. 
 
 ```{r}
 # write your code here
+print("test")
 ```
 At first glance the data looks unorganized and the columns do not have logical names, this is something that occurs a lot in the real world so it is best to get familiar with such data as soon as possible.
 
