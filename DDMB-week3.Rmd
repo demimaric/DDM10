@@ -5,6 +5,12 @@ author: "Meike Morren" # fill in your name
 output: pdf_document
 ---
 ```{r setup, include=FALSE}
+tinytex::install_tinytex() 
+library(tinytex)
+
+options(tinytex.verbose = TRUE) 
+update.packages(ask = FALSE, checkBuilt = TRUE) 
+
 knitr::opts_chunk$set(echo = TRUE)
 install.packages("cluster")
 install.packages("klaR")
@@ -12,12 +18,6 @@ install.packages("dbscan")
 install.packages("fpc")
 install.packages("amap")
 library(factoextra)
-#install.packages("cluster")
-#install.packages("klaR")
-#install.packages("dbscan") 
-#install.packages("fpc")
-#install.packages("amap")
-library(factoextra) # used for determining optimal amount of clusters
 library(gridExtra)
 library(cluster)
 library(klaR)
@@ -109,8 +109,7 @@ grid.arrange(f1sa,f1ea, f1ga, nrow=1)
 ### Discuss your findings and reason about possible values for K (K stands for amount of clusters).
 
 ----------------------------------------------------------------------------------
-*please elaborate your answer (4-5 sentences) about here*
-
+kmediods is a form of hard clustering, which means that a point must belong to a cluster. Moreover, the kmediods clustering is robust to outliers. The different methods are very close in terms of the optimal number of clusters. The silhouette method gives 2 clusters, the GAP 1, and the elbow method we can assume is either 2 or 3, as the steep curve ends there. The low number of clusters would indicate that the data objects are very close.
 
 ----------------------------------------------------------------------------------
 
@@ -130,7 +129,7 @@ abline(h=0.54, lty = 2)
 ### Interpret the differences in epsilon values across the k-solutions, and explain what the optimal epsilon value for k=3 means.
 
 ----------------------------------------------------------------------------------
-*please elaborate your answer (4-5 sentences) about here*
+The optimal epsilon value can be found on the point of maximum curvature. In the plot there are two equal points, so of course we look at the higher epsilon value there. This value defines the distance that separates the two points that are most far apart. for k=3, the distance is almost similar to k =2, but the maximum distance of k = 4 is more apart.
 
 
 ----------------------------------------------------------------------------------
@@ -139,9 +138,6 @@ abline(h=0.54, lty = 2)
 Now that we have determined the best epsilon value given $k$ we will use the function `fpc::dbscan` to cluster the data points. Choose the most suitable $K$-value and experiment with the parameter `MinPts`. The documentation might give you a hint for a reasonable value, try 4 different `MinPts` value and report the effect of this parameter on the outcome. We expect 1 grid with 2x2 plots.(hint: use `grid.arrange`).
 
 ```{r}
-<<<<<<< HEAD
-
-=======
 dfx<-na.omit(df[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")])
 db <- fpc::dbscan(dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],eps=.5,MinPts = 5)
 f1<-fviz_cluster(db, dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")], stand = FALSE, geom = "point", main = "minPts = 5")
@@ -153,7 +149,6 @@ db <- fpc::dbscan(dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")]
 f4<-fviz_cluster(db, dfx[, c("ZGross.income", "ZRating", "ZTax.5.", "ZUnit.price")],stand = FALSE, geom = "point", main = "minPts = 20")
 
 grid.arrange(f1, f2, f3, f4, ncol=2)
->>>>>>> 45f1c8d98bd5e1ec38605c2f178d3c8810ddf5f0
 ```
 
 
@@ -180,7 +175,7 @@ fviz_nbclust(df[,c("ZGross.income","ZRating","ZTax.5.","ZUnit.price")], kmeans, 
 ### What is the most optimal number of clusters? Which distance measure and clustering method give the most clear results?
 
 ----------------------------------------------------------------------------------
-*please elaborate your answer (4-5 sentences) about here*
+Two out of three methods indicate that the right number of clusters is 2. This is clear for the silhouette method, and for the GAP we have to interpret the plot. The elbow method also gives a clear indicator of just 1 cluster.
 
 
 ----------------------------------------------------------------------------------
@@ -205,7 +200,7 @@ We assume the distribution of the training data and the test data are similar, h
 - *conclude your findings*
   
 ----------------------------------------------------------------------------------
-*please elaborate your answer (4-5 sentences) about here*
+Besides the obvious different codes for the k-modes and k-means, the methods that are applied give a very similar results. All methods give a low number of clusters which seems somewhat surprising. In R, Euclidean distance is simpler to apply as it is the default method. However, cosine_dist worked fine and seems correctly. With Trial and Error the dbscan method seems very appropriate, yet when the number of clusters differ between 1 and 1000, it is a lot of work.The reason that we support the optimal number of clusters is because of the consistency between the application of multiple methods and different  ways to find k that all lead to the same optimal number of clusters. It is however confusing how the GAP method always was the odd one out. Looking at the visual clusters, it however makes sense to have a single cluster, when neglecting outliers. All in all, we found that most of the methods suggest the optimal number of clusters is 2, and when trying multiple k's, the optimal value of epsilon hangs around .5.
 
 
 ----------------------------------------------------------------------------------
