@@ -82,9 +82,6 @@ df$ip <- rowMeans(df[, ip])
 ifl <- c("v6.6", "v6.7", "v6.8", "v6.9", "v6.10")
 df$ifl <- rowMeans(df[, ifl])
 
-ip <- c("v6.1", "v6.2", "v6.3", "v6.4", "v6.5" )
-df$ip <- rowMeans(df [, ip])
-
 unc <- c("v3.11", "v3.12", "v3.13", "v3.14")
 df$unc <- rowMeans(df[, unc])
 
@@ -114,7 +111,6 @@ Create 7 plots, one for each variable, and create a [heatmap](http://www.sthda.c
 If you are unsure on how to do this, please look at the link provided above!
 
 ```{r}
-# first calculate the correlation matrix using cor()
 # use = "pairwise.complete.obs"
 colnames(df)
 columns<- colnames(df)[159:165]
@@ -144,6 +140,32 @@ Use `ggplot` again to plot this multiple melted correlation matrix, and use `fac
 
 ```{r}
 # First create a correlation matrix per country for only the variables you're interested in
+cormat1 <- cor(df[df$country == 1, 159:165], use="pairwise.complete.obs")
+cormat2 <- cor(df[df$country == 2, 159:165], use="pairwise.complete.obs")
+cormat3 <- cor(df[df$country == 3, 159:165], use="pairwise.complete.obs")
+cormat4 <- cor(df[df$country == 4, 159:165], use="pairwise.complete.obs")
+
+melted_cormat <- melt(round(cormat1,2), na.rm = TRUE)
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
+
+melted_cormat <- melt(round(cormat2,2), na.rm = TRUE)
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
+
+melted_cormat <- melt(round(cormat3,2), na.rm = TRUE)
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
+
+melted_cormat <- melt(round(cormat4,2), na.rm = TRUE)
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
+
+
 
 
 # melt the correlation matrix into a dataframe
