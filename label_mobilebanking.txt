@@ -1,0 +1,164 @@
+VAR LABELS
+    country	country of residence
+    educ	university or school
+    v1.1	times bought on internet
+    v1.2	Internetbanking
+    v1.3	Own a mobile telephone
+    v1.5	Mobile phone bill
+    v1.7	postbank m-banking
+    v1.4.1	To be able to call others
+    v1.4.2	To be able to SMS
+    v1.4.3	For wireless internet
+    v1.4.4	It was a special offer
+    v1.4.5	The phone was a present
+    v1.4.6	So that others can reach me
+    v1.6.1	Brand mobile phone
+    v1.6.2	Network operator
+    v1.6.3	Costs making calls
+    v1.6.4	Costs text messaging
+    v1.6.5	costs of mobile telephone
+    v1.6.6	costs of monthly charge
+    v1.6.7	Network coverage
+    v1.6.8	Same operator as friends use
+    v1.8.1	balance alert
+    v1.8.2	transferring to others
+    v1.8.3	transferring to savings
+    v1.8.4	balance info
+    v1.8.5	stock info
+    v1.8.6	just use for calling
+    v2.1	times use mobile for calling others
+    v2.2	times use mobile for text messaging
+    v2.3	knowledge compared to others
+    v2.4	knowledge compared to friends
+    v2.5	consider buying new phone
+    v2.6	know characteristics phone better
+    v2.7	know existence phones
+    v2.8	know more of mobile phone
+    v2.2.1	wireless devices
+    v2.2.2	mobile network operators
+    v2.2.3	wireless internet
+    v2.2.4	accesories for mobile phones
+    v3.3	MB fits the way I am used to doing finances
+    v3.4	MB fits the way i like to do my finances
+    v3.5	Using MB fits me as a person
+    v3.6	Using MB would improve my image among friends
+    v3.7	MB would be used by more popular people
+    v3.8	Using MB would take a long time to learn
+    v3.9	Using MB would be often frustrating
+    v3.10	Using MB would be easy to use
+    v3.11	How sure does MB perform satisfactorily
+    v3.12	How much uncertainty in subscribing for MB
+    v3.13	MB would perform as well as other banking services
+    v3.14	Confidence MB's performance
+    v3.1.1	MB satisfies banking needs better
+    v3.1.2	MB makes me feel good
+    v3.1.3	MB makes others think better of me
+    v3.1.4	MB makes managing my financials better
+    v3.1.5	MB anywhere
+    v3.1.6	MB anytime
+    v3.15.1	5% dicount on mobile phone bill
+    v3.15.2	1% higher interest on savings account
+    v3.15.3	free access to internet banking
+    v3.15.4	free credit card
+    v3.15.5	free access to wireless banking
+    v3.15.6	my operator cannot provide my bank with personal info
+    v4.1	upgrading pre-paid account
+    v4.2	transferring money to own accounts
+    v4.3	transferring money to accounts of others
+    v4.4	mobile payment
+    v4.5	mobile brokerage
+    v4.6	balance requests
+    v4.7	balance alerts
+    v5.1	I would certainly subscribe today
+    v5.2	I would try to subscribe asap
+    v5.3	I would be one of the first students to subscribe
+    v6.1	Parents and I talk about advertisements
+    v6.2	I ask parents for advice when buying goods I dont buy often
+    v6.3	I ask my parents for advice for buying important things
+    v6.4	My parents and I dont agree on what I should buy
+    v6.5	What, where and when I buy is determined by my parents
+    v6.6	I rarely buy products before my frinds approve of them
+    v6.7	Its important that friends approve of the store where I buy
+    v6.8	I am very loyal to stores where friends shop
+    v6.9	I always buy same brands as friends
+    v6.10	I achieve a sense of belonging by buying same things as friends
+    v7.1	equality (universalism)
+    v7.2	inner harmony (universalism)
+    v7.3	social power
+    v7.4	pleasure (hedonism)
+    v7.5	freedom
+    v7.6	a spiritual life (universalism)
+    v7.7	sense of belonging (universalism)
+    v7.8	social order (power)
+    v7.9	an exciting life (hedonism)
+    v7.10	meaning in life (universalism)
+    v7.11	politeness (conformity)
+    v7.12	wealth (
+    v7.13	national security
+    v7.14	self respect
+    v7.15	reciprocation of favors
+    v7.16	creativity
+    v7.17	a world at peace
+    v7.18	respect for tradition
+    v7.19	mature love
+    v7.20	self-discipline (conformity) 
+    v7.21	privacy
+    v7.22	family security
+    v7.23	social recognition
+    v7.24	unity with nature
+    v7.25	a varied life
+    v7.26	wisdom
+    v7.27	authority
+    v7.28	true friendship
+    v7.29	a world at beauty
+    v7.30	social justice
+    v7.31	independent
+    v7.32	moderate
+    v7.33	loyal
+    v7.34	ambitious
+    v7.35	broadminded (openness)
+    v7.36	humble
+    v7.37	daring
+    v7.38	protecting the environment
+    v7.39	influential
+    v7.40	honoring of parents and elders
+    v7.41	choosing own goals
+    v7.42	healthy
+    v7.43	capable
+    v7.44	accepting my portion in life
+    v7.45	honest
+    v7.46	preserving my public image
+    v7.47	obedient
+    v7.48	intelligent
+    v7.49	helpful
+    v7.50	enjoying life
+    v7.51	devout
+    v7.52	responsable
+    v7.53	curious
+    v7.54	forgiving
+    v7.55	succesful
+    v7.56	clean
+    v7.57	self-indulgent (hedonism)
+    v8.1	gender
+    v8.2	age
+    v8.3	living situation
+    v8.4	From the age of 15 I ahve been living mostly with..
+    v8.5	parents divorced?
+    v8.6	how long ago?
+    v8.7	how many countries lived?
+    v8.8	Where did you live most of time
+    v8.9	where did you grow up?
+    v8.10	where did parents grow up?
+    v8.11	which school/university?
+    v8.12	which school/university?
+
+VALUE LABELS
+    country
+      1 	England
+      2 	Sweden
+      3 	Netherlands
+      4 	Spain
+/
+
+
+    
