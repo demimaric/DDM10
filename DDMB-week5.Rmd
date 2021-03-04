@@ -1,0 +1,247 @@
+---
+title: "Data Driven Decision-Making in Business"
+author: "Meike Morren"
+subtit: 'Week 5'
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This week you will perform discriminant analysis on the mobile banking dataset. This dataset consists of survey data where the goal of this assignment will be to predict the origin of the respondents' country of origin. In other words, can we predict to which country the respondent belongs given the survey results?
+
+```{r}
+# write your code here
+print("test")
+```
+At first glance the data looks unorganized and the columns do not have logical names, this is something that occurs a lot in the real world so it is best to get familiar with such data as soon as possible.
+
+Almost all data is categorical, this is a problem since LDA is known to perform well on continuous data. Let's create continuous data by averaging over the different categories. This way we can embed a respondent by means of assigning a score per category. The categories of interest for this assignment are
+
+Category 1: perceived fit & image
+  - v3.3	Mobile Banking fits the way I am used to doing finances
+  - v3.4	Mobile Banking fits the way i like to do my finances
+  - v3.5	Using Mobile Banking fits me as a person
+  - v3.6	Using Mobile Banking would improve my image among friends
+  - v3.7	Mobile Banking would be used by more popular people
+  
+Category 2: intention to use (intention to behavior)
+  - v5.1	I would certainly subscribe today
+  - v5.2	I would try to subscribe asap
+  - v5.3	I would be one of the first students to subscribe
+
+Category 3: influence parents
+  - v6.1	Parents and I talk about advertisements
+  - v6.2	I ask parents for advice when buying goods I dont buy often
+  - v6.3	I ask my parents for advice for buying important things
+  - v6.4	My parents and I dont agree on what I should buy
+  - v6.5	What, where and when I buy is determined by my parents
+
+Category 4:  influence friends
+  - v6.6	I rarely buy products before my frinds approve of them
+  - v6.7	Its important that friends approve of the store where I buy
+  - v6.8	I am very loyal to stores where friends shop
+  - v6.9	I always buy same brands as friends
+  - v6.10	I achieve a sense of belonging by buying same things as friends
+
+Category 5: uncertainty
+  - v3.11	How sure does MB perform satisfactorily
+  - v3.12	How much uncertainty in subscribing for MB
+  - v3.13	MB would perform as well as other banking services
+  - v3.14	Confidence MB's performance
+
+Category 6: perceived usefulness
+  - v3.1.1	MB satisfies banking needs better
+  - v3.1.2	MB makes me feel good
+  - v3.1.3	MB makes others think better of me
+  - v3.1.4	MB makes managing my financials better
+  - v3.1.5	MB anywhere
+  - v3.1.6	MB anytime
+
+Category 7: perceived ease of use
+  - v3.8	Using MB would take a long time to learn
+  - v3.9	Using MB would be often frustrating
+  - v3.10	Using MB would be easy to use
+
+Per row, consider each category and take the mean given the columns that are assigned to that category. In the end you should obtain 7 new columns that we will use for LDA.
+```{r}
+# write your code here
+```
+
+Now that we have access to these 7 variables let's inspect them! Make a grid of the scatterplots of the variables using `pairs`. You can make this much fancier using other packages, one of them including the option to add colouring for grouping variable in the `car` package. Please see this [scatterplot overview](https://www.statmethods.net/graphs/scatterplot.html). 
+
+```{r}
+# write your code here
+```
+
+Create 7 plots, one for each variable, and create a [heatmap](http://www.sthda.com/english/wiki/ggplot2-quick-correlation-matrix-heatmap-r-software-and-data-visualization) to visualize these features accordingly. This consists of several steps:
+
+- calculate the correlation matrix using `cor` pairwise deletion
+- reshape the matrix to a dataframe (last column= correlations) using `melt`
+- use `ggplot` to plot this matrix, add `geom_tile`
+- OPTIONAL: add the correlations by `geom_text`
+- Make sure you use a `+` sign on the end of the line *before* `geom_tile` and `geom_text`
+
+If you are unsure on how to do this, please look at the link provided above!
+
+```{r}
+# first calculate the correlation matrix using cor()
+# use = "pairwise.complete.obs"
+
+# then use melt() from the package reshape2
+# to create a dataframe, where all correlations are in the last column
+library(reshape2)
+library(ggplot2)
+```
+
+Now compare the four countries using country-specific heat maps. To do this you need to repeat the steps above for each country, add these dataframes with the correlations together using `rbind` and make sure that you add a column that shows the countries (and that is labeled `Country` in each dataframe). The combined melted dataframe now consists of four columns: Var1, Var2, value and country. Note that the labels for country are:
+
+1 UK
+2 Sweden
+3 Netherlands
+4 Spain
+
+Use `ggplot` again to plot this multiple melted correlation matrix, and use `facet_wrap` to create separate heatmaps for each country in one `ggplot` command. So first create a correlation matrix for one country, i.e. use indexing: `df[df$Country==1,columns]`. Make sure you use a `+` sign before `facet_wrap`!
+
+```{r}
+# First create a correlation matrix per country for only the variables you're interested in
+
+
+# melt the correlation matrix into a dataframe
+# create an extra column to the melted correlation matrix indicating the country
+# use `cbind` to add this country column to the melted dataframe.
+
+
+# add the name "Country" to the column so that you can use this as a variable later on
+
+
+# use `rbind` to add four melted dataframes of the four countries.
+# this means bind by row, hence all the countries will be on top of each other
+# with the column country indicating the country
+
+
+# use ggplot to plot this dataframe with all the countries
+# use geom_tile() you do not need to specify anything else
+# use geom_text( indicate the variables you use by aes())
+# use facet_wrap to create one plot for each country
+
+```
+
+Now that we have created and inspected our 7 categories/features we will now use LDA to predict the corresponding Country per data point. First, use listwise deletion on the variables that you need (i.e. the concepts and Country). Then split the dataframe in two sets, one to train (train data) the LDA model and one to evaluate it on (test data). Use a ratio of 0.85 for the train set and 0.15 for the test set similar to week 3. Before you run the `sample` command, first set the seed to 1234 so you get the same division.
+
+```{r}
+set.seed(1234)
+# write your sample() code here
+# set.seed only works on the line immediately following the set.seed
+
+# separate the train and test set using the index you created with the sample command
+```
+
+Finally, train an LDA model on the training set using `lda` and evaluate the performance on the test set using `predict`. What is returned from this predict function? Do you understand how the predicted labels are assigned to the observations in the dataset? Remember that the posterior is the probability that an observation belongs to a certain class (note that we talk about classes here, and not about clusters, but we still mean the grouping factor). 
+```{r}
+library(MASS)
+# write your code here
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### How are the predicted labels assigned to the observation in the dataset?
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+The next step is that based on the predicted classes and the true labels (i.e. the country the people belong to), you can assess how well your lda model has performed on the test set. Measure the evaluation by means of calculating the accuracy. Create the confusion matrix and use your code from previous weeks to calculate the accuracy (notice that the APER is the same metric as accuracy).
+
+```{r}
+# write your code here
+
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Report the accuracy and conclude your findings. What does this number tell us? Is it a good number? Explain.
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+Now repeat the analysis above with `qda` and compare the results using the accuracy.
+
+```{r}
+# write your code here
+
+```
+Could you think of any reason why the accuracy might not be as good as you had hoped?
+
+Check the assumptions of normality of the dataset, for each class test normality of every component (predictor).
+You can check the kurtosis and skewness, plot histograms and qqplot, or use the `shapiro.test`. If the p-value is higher than 0.1 usually we can accept the hypothesis that the variable is normally distributed.
+
+Perform the Shapiro–Wilk test on the columns used for LDA and QDA and report your findings. Check whether this is true for each country. Use `shapiro.test`.
+
+```{r}
+# write your code here
+
+```
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Report the shapiro test results and discuss what this means.
+
+----------------------------------------------------------------------------------
+*Using the Shaprio-Wilk normality test we notice that none of the columns are normally distributed as all p-values are < 0.05. As a result, given this p-value, we have to conclude that we reject the null hypothesis and conclude there is evidence that these columns are not normally distributed. Although it is known that LDA can handle a violation of these assumption it is an indicator that other methods might be more suitable for this classification problem.*
+
+----------------------------------------------------------------------------------
+
+Finally, plot the decision boundary of a `qda` and `lda` solution. To do this, it is better to keep it two-dimensional with two variables, and simple with only two groups. This makes the plot easier to understand. Hence, you need to select only two variables, and two countries. If you understand the plot, feel free to play around with the code to include other variables, or more countries.
+
+
+```{r}
+# create decision boundary
+mydata<-df[df$Country==1|df$Country==4,columns[c(2,3,1)]]
+
+# generate data
+N<-100
+uncertainty  <- seq(min(df[,columns[2]]), max(df[,columns[2]]), length=N)
+easeofuse  <- seq(min(df[,columns[3]]), max(df[,columns[3]]), length=N)
+usefulness  <- seq(min(df[,columns[4]]), max(df[,columns[4]]), length=N)
+image  <- seq(min(df[,columns[5]]), max(df[,columns[5]]), length=N)
+intention  <- seq(min(df[,columns[6]]), max(df[,columns[6]]), length=N)
+parents  <- seq(min(df[,columns[7]]), max(df[,columns[7]]), length=N)
+
+# select two variables
+newdata <- expand.grid(x=uncertainty,y=easeofuse)
+colnames(newdata)<-c("uncertainty","easeofuse")
+
+# predict values for new data & perform the lda on these two variables
+mylda1 <- lda(Country~uncertainty + easeofuse, mydata)
+prd    <- predict(mylda1, newdata=newdata)$class
+
+# plot the data for two variables usefulness and image
+plot(mydata[,1:2], col = mydata$Country)
+points(mylda1$means, pch = "+", cex = 3, col = c("black","blue"))
+contour(x = uncertainty, y = easeofuse, z = matrix(prd,N,N), 
+        levels = c(1,4), add = TRUE, drawlabels = TRUE)
+
+### do the same for qda
+myqda1 <- qda(Country~uncertainty + easeofuse, mydata)
+prd    <- predict(myqda1, newdata=newdata)$class
+
+plot(mydata[,1:2], col = mydata$Country)
+points(myqda1$means, pch = "+", cex = 3, col = c("black","blue"))
+contour(x = uncertainty, y = easeofuse, z = matrix(prd,N,N), 
+        levels = c(1,4), add = TRUE, drawlabels = TRUE)
+
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Why do you think the difference between the lda and qda boundary decision in the example given above is not that big?
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
