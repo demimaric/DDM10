@@ -75,21 +75,15 @@ df$pfi <- rowMeans(df[, pfi])
 
 itu <- c("v5.1", "v5.2", "v5.3")
 df$itu <- rowMeans(df[, itu])
-df$itu 
 
 ip <- c("v6.1", "v6.2", "v6.3", "v6.4", "v6.5")
 df$ip <- rowMeans(df[, ip])
-df$ip
-
-ifl <- c("v6.6", "v6.7", "v6,8", "v6.9", "v6.10")
-df$ifl <- rowMeans(df[, ifl])
-df$ifl 
-
-ip <- c("v6.1", "v6.2", "v6.3", "v6.4", "v6.5" )
-df$ip <- rowMeans(df [, ip])
 
 ifl <- c("v6.6", "v6.7", "v6.8", "v6.9", "v6.10")
 df$ifl <- rowMeans(df[, ifl])
+
+ip <- c("v6.1", "v6.2", "v6.3", "v6.4", "v6.5" )
+df$ip <- rowMeans(df [, ip])
 
 unc <- c("v3.11", "v3.12", "v3.13", "v3.14")
 df$unc <- rowMeans(df[, unc])
@@ -106,7 +100,7 @@ df$peus <- rowMeans(df[, peus])
 Now that we have access to these 7 variables let's inspect them! Make a grid of the scatterplots of the variables using `pairs`. You can make this much fancier using other packages, one of them including the option to add colouring for grouping variable in the `car` package. Please see this [scatterplot overview](https://www.statmethods.net/graphs/scatterplot.html). 
 
 ```{r}
-# write your code here
+pairs(~ df$pfi + df$itu + df$ip + df$ifl + df$unc + df$pu + df$peus)
 ```
 
 Create 7 plots, one for each variable, and create a [heatmap](http://www.sthda.com/english/wiki/ggplot2-quick-correlation-matrix-heatmap-r-software-and-data-visualization) to visualize these features accordingly. This consists of several steps:
