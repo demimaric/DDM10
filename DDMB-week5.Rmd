@@ -116,6 +116,15 @@ If you are unsure on how to do this, please look at the link provided above!
 ```{r}
 # first calculate the correlation matrix using cor()
 # use = "pairwise.complete.obs"
+colnames(df)
+columns<- colnames(df)[159:165]
+cormat<-cor(df[,columns], use="pairwise.complete.obs")
+library(reshape2)
+melted_cormat <- melt(round(cormat,2), na.rm = TRUE)
+library(ggplot2)
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
 
 # then use melt() from the package reshape2
 # to create a dataframe, where all correlations are in the last column
