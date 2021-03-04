@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 This week you will perform discriminant analysis on the mobile banking dataset. This dataset consists of survey data where the goal of this assignment will be to predict the origin of the respondents' country of origin. In other words, can we predict to which country the respondent belongs given the survey results?
 
 ```{r}
-# write your code here
+# write your code heree
 print("test")
 df <- read.csv("mobilebanking.csv")
 colnames(df)
@@ -77,6 +77,7 @@ df$pfi
 itu <- c("v5.1", "v5.2", "v5,3")
 df$itu <- rowMeans(df[, itu])
 df$itu 
+
 
 ```
 
