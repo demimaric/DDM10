@@ -72,6 +72,12 @@ Per row, consider each category and take the mean given the columns that are ass
 ```{r}
 pfi <- c("v3.3", "v3.4", "v3.5", "v3.6", "v3.7")
 df$pfi <- rowMeans(df[, pfi])
+df$pfi
+
+itu <- c("v5.1", "v5.2", "v5,3")
+df$itu <- rowMeans(df[, itu])
+df$itu 
+
 ```
 
 Now that we have access to these 7 variables let's inspect them! Make a grid of the scatterplots of the variables using `pairs`. You can make this much fancier using other packages, one of them including the option to add colouring for grouping variable in the `car` package. Please see this [scatterplot overview](https://www.statmethods.net/graphs/scatterplot.html). 
