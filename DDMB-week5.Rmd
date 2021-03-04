@@ -119,17 +119,17 @@ If you are unsure on how to do this, please look at the link provided above!
 colnames(df)
 columns<- colnames(df)[159:165]
 cormat<-cor(df[,columns], use="pairwise.complete.obs")
-library(reshape2)
-melted_cormat <- melt(round(cormat,2), na.rm = TRUE)
-library(ggplot2)
-ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
+
+
 
 # then use melt() from the package reshape2
 # to create a dataframe, where all correlations are in the last column
 library(reshape2)
 library(ggplot2)
+melted_cormat <- melt(round(cormat,2), na.rm = TRUE)
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
 ```
 
 Now compare the four countries using country-specific heat maps. To do this you need to repeat the steps above for each country, add these dataframes with the correlations together using `rbind` and make sure that you add a column that shows the countries (and that is labeled `Country` in each dataframe). The combined melted dataframe now consists of four columns: Var1, Var2, value and country. Note that the labels for country are:
