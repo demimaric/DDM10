@@ -18,6 +18,7 @@ This week you will perform discriminant analysis on the mobile banking dataset. 
 print("test")
 df <- read.csv("mobilebanking.csv")
 colnames(df)
+df$country <- df$ï..country
 ```
 At first glance the data looks unorganized and the columns do not have logical names, this is something that occurs a lot in the real world so it is best to get familiar with such data as soon as possible.
 
@@ -145,43 +146,51 @@ cormat2 <- cor(df[df$country == 2, 159:165], use="pairwise.complete.obs")
 cormat3 <- cor(df[df$country == 3, 159:165], use="pairwise.complete.obs")
 cormat4 <- cor(df[df$country == 4, 159:165], use="pairwise.complete.obs")
 
-melted_cormat <- melt(round(cormat1,2), na.rm = TRUE)
-ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-
-melted_cormat <- melt(round(cormat2,2), na.rm = TRUE)
-ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-
-melted_cormat <- melt(round(cormat3,2), na.rm = TRUE)
-ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-
-melted_cormat <- melt(round(cormat4,2), na.rm = TRUE)
-ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-
-
-
-
 # melt the correlation matrix into a dataframe
+melted_cormat1 <- cbind(melt(round(cormat1,2), na.rm = TRUE),rep("UK", 49))
+melted_cormat2 <- cbind(melt(round(cormat2,2), na.rm = TRUE), rep("Sweden", 49))
+melted_cormat3 <- cbind(melt(round(cormat3,2), na.rm = TRUE), rep("Netherlands", 49))
+melted_cormat4 <- cbind(melt(round(cormat4,2), na.rm = TRUE), rep("Spain",49))
 # create an extra column to the melted correlation matrix indicating the country
 # use `cbind` to add this country column to the melted dataframe.
 
 
 # add the name "Country" to the column so that you can use this as a variable later on
-
+colnames(melted_cormat1)[4] <- "Country"
+colnames(melted_cormat2)[4] <- "Country"
+colnames(melted_cormat3)[4] <- "Country"
+colnames(melted_cormat4)[4] <- "Country"
 
 # use `rbind` to add four melted dataframes of the four countries.
 # this means bind by row, hence all the countries will be on top of each other
+meltedcormatmain <- rbind(melted_cormat1, melted_cormat2, melted_cormat3, melted_cormat4 )
 # with the column country indicating the country
 
 
 # use ggplot to plot this dataframe with all the countries
+ggplot(data = meltedcormatmain, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile() +
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4) + facet_wrap(factor(meltedcormatmain$Country))
+
+
+ggplot(data = melted_cormat1, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
+
+
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
+
+
+ggplot(data = melted_cormat3, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
+
+
+ggplot(data = melted_cormat4, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
 # use geom_tile() you do not need to specify anything else
 # use geom_text( indicate the variables you use by aes())
 # use facet_wrap to create one plot for each country
@@ -192,7 +201,11 @@ Now that we have created and inspected our 7 categories/features we will now use
 
 ```{r}
 set.seed(1234)
-# write your sample() code here
+print(df)
+colnames(df)[1] <-"Country"
+df$Country
+
+dfz <- cbind(na.omit(df$Country, df$pfi + df$itu + df$ip + df$ifl + df$unc + df$pu + df$peus))
 # set.seed only works on the line immediately following the set.seed
 
 # separate the train and test set using the index you created with the sample command
