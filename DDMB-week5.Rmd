@@ -75,7 +75,6 @@ df$pfi <- rowMeans(df[, pfi])
 
 itu <- c("v5.1", "v5.2", "v5.3")
 df$itu <- rowMeans(df[, itu])
-<<<<<<< HEAD
 df$itu 
 
 ip <- c("v6.1", "v6.2", "v6.3", "v6.4", "v6.5")
@@ -85,12 +84,6 @@ df$ip
 ifl <- c("v6.6", "v6.7", "v6,8", "v6.9", "v6.10")
 df$ifl <- rowMeans(df[, ifl])
 df$ifl 
-
-
-
-
-=======
->>>>>>> c8a6c6fed8e1412977d24720c9143964aaf8d007
 
 ip <- c("v6.1", "v6.2", "v6.3", "v6.4", "v6.5" )
 df$ip <- rowMeans(df [, ip])
