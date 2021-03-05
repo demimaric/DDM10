@@ -205,7 +205,8 @@ print(df)
 colnames(df)[1] <-"Country"
 df$Country
 
-dfz <- cbind(na.omit(df$Country, df$pfi + df$itu + df$ip + df$ifl + df$unc + df$pu + df$peus))
+dfz <- na.omit(df[1,] & df[159:165,] )
+dfz <- na.omit(df[df$Country, df$pfi,df$itu,df$ip,df$ifl, df$unc, df$pu, df$peus])
 # set.seed only works on the line immediately following the set.seed
 
 # separate the train and test set using the index you created with the sample command
