@@ -18,7 +18,7 @@ This week you will perform discriminant analysis on the mobile banking dataset. 
 print("test")
 df <- read.csv("mobilebanking.csv")
 colnames(df)
-df$country <- df$ï..country
+table(df$country)
 ```
 At first glance the data looks unorganized and the columns do not have logical names, this is something that occurs a lot in the real world so it is best to get familiar with such data as soon as possible.
 
@@ -79,6 +79,7 @@ df$itu <- rowMeans(df[, itu])
 
 ip <- c("v6.1", "v6.2", "v6.3", "v6.4", "v6.5")
 df$ip <- rowMeans(df[, ip])
+mean(df$ip, na.rm = TRUE)
 
 ifl <- c("v6.6", "v6.7", "v6.8", "v6.9", "v6.10")
 df$ifl <- rowMeans(df[, ifl])
@@ -215,7 +216,9 @@ the number 1 to 4 stand for the assigned country numbers. In this case, the tota
 The next step is that based on the predicted classes and the true labels (i.e. the country the people belong to), you can assess how well your lda model has performed on the test set. Measure the evaluation by means of calculating the accuracy. Create the confusion matrix and use your code from previous weeks to calculate the accuracy (notice that the APER is the same metric as accuracy).
 
 ```{r}
-# write your code here
+lda2 <- lda(country ~ pfi + itu + ip + ifl+ unc + pu + peus, testData)
+dfl <- na.omit(testData[,c("country", "pfi", "itu", "ip", "ifl", "unc", "pu", "peus")] )
+table(dfl$country,predict(lda2)$class)
 
 ```
 
@@ -231,8 +234,9 @@ The next step is that based on the predicted classes and the true labels (i.e. t
 Now repeat the analysis above with `qda` and compare the results using the accuracy.
 
 ```{r}
-# write your code here
-
+qda2 <- qda(country ~ pfi + itu + ip + ifl+ unc + pu + peus, testData)
+dfq <- na.omit(testData[,c("country", "pfi", "itu", "ip", "ifl", "unc", "pu", "peus")] )
+table(dfq$country,predict(qda2)$class)
 ```
 Could you think of any reason why the accuracy might not be as good as you had hoped?
 
