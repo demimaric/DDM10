@@ -141,6 +141,7 @@ Use `ggplot` again to plot this multiple melted correlation matrix, and use `fac
 
 ```{r}
 # First create a correlation matrix per country for only the variables you're interested in
+colnames(df)
 cormat1 <- cor(df[df$country == 1, 159:165], use="pairwise.complete.obs")
 cormat2 <- cor(df[df$country == 2, 159:165], use="pairwise.complete.obs")
 cormat3 <- cor(df[df$country == 3, 159:165], use="pairwise.complete.obs")
@@ -171,58 +172,35 @@ meltedcormatmain <- rbind(melted_cormat1, melted_cormat2, melted_cormat3, melted
 ggplot(data = meltedcormatmain, aes(x=Var1, y=Var2, fill=value)) + 
   geom_tile() +
   geom_text(aes(Var2, Var1, label = value), color = "white", size = 4) + facet_wrap(factor(meltedcormatmain$Country))
-
-
-ggplot(data = melted_cormat1, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-
-
-ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-
-
-ggplot(data = melted_cormat3, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-
-
-ggplot(data = melted_cormat4, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-# use geom_tile() you do not need to specify anything else
-# use geom_text( indicate the variables you use by aes())
-# use facet_wrap to create one plot for each country
-
 ```
 
 Now that we have created and inspected our 7 categories/features we will now use LDA to predict the corresponding Country per data point. First, use listwise deletion on the variables that you need (i.e. the concepts and Country). Then split the dataframe in two sets, one to train (train data) the LDA model and one to evaluate it on (test data). Use a ratio of 0.85 for the train set and 0.15 for the test set similar to week 3. Before you run the `sample` command, first set the seed to 1234 so you get the same division.
 
 ```{r}
-set.seed(1234)
 print(df)
-colnames(df)[1] <-"Country"
+colnames(df)[1] <-"country"
 df$Country
+dfz <- na.omit(df[,c("country", "pfi", "itu", "ip", "ifl", "unc", "pu", "peus")] )
 
-dfz <- na.omit(df[1,] & df[159:165,] )
-dfz <- na.omit(df[df$Country, df$pfi,df$itu,df$ip,df$ifl, df$unc, df$pu, df$peus])
-# set.seed only works on the line immediately following the set.seed
-
-# separate the train and test set using the index you created with the sample command
+set.seed(1234)
+trainingRowIndex <- sample(1:nrow(dfz), 0.85*nrow(dfz))
+trainingData <- df[trainingRowIndex, ]
+testData  <- df[-trainingRowIndex, ]
 ```
 
 Finally, train an LDA model on the training set using `lda` and evaluate the performance on the test set using `predict`. What is returned from this predict function? Do you understand how the predicted labels are assigned to the observations in the dataset? Remember that the posterior is the probability that an observation belongs to a certain class (note that we talk about classes here, and not about clusters, but we still mean the grouping factor). 
 ```{r}
 library(MASS)
-# write your code here
+lda1 <- lda(country ~ pfi + itu + ip + ifl+ unc + pu + peus, trainingData)
+prd <- predict(lda1, data=trainingData)$class
+table(prd)
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
 ### How are the predicted labels assigned to the observation in the dataset?
 
 ----------------------------------------------------------------------------------
-*please elaborate your answer (4-5 sentences) about here*
+the number 1 to 4 stand for the assigned country numbers. In this case, the total predicted number ones relate to the total predicted "UK" values.
 
 
 ----------------------------------------------------------------------------------
