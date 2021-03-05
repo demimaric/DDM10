@@ -264,15 +264,16 @@ Finally, plot the decision boundary of a `qda` and `lda` solution. To do this, i
 ```{r}
 # create decision boundary
 mydata<-df[df$Country==1|df$Country==4,columns[c(2,3,1)]]
-
+colnames(mydata)<-c("uncertainty","easeofuse", "Country")
+dfu<-na.omit(df[,columns])
 # generate data
 N<-100
-uncertainty  <- seq(min(df[,columns[2]]), max(df[,columns[2]]), length=N)
-easeofuse  <- seq(min(df[,columns[3]]), max(df[,columns[3]]), length=N)
-usefulness  <- seq(min(df[,columns[4]]), max(df[,columns[4]]), length=N)
-image  <- seq(min(df[,columns[5]]), max(df[,columns[5]]), length=N)
-intention  <- seq(min(df[,columns[6]]), max(df[,columns[6]]), length=N)
-parents  <- seq(min(df[,columns[7]]), max(df[,columns[7]]), length=N)
+uncertainty  <- seq(min(dfu[,columns[2]]), max(dfu[,columns[2]]), length=N)
+easeofuse  <- seq(min(dfu[,columns[3]]), max(dfu[,columns[3]]), length=N)
+usefulness  <- seq(min(dfu[,columns[4]]), max(dfu[,columns[4]]), length=N)
+image  <- seq(min(dfu[,columns[5]]), max(dfu[,columns[5]]), length=N)
+intention  <- seq(min(dfu[,columns[6]]), max(dfu[,columns[6]]), length=N)
+parents  <- seq(min(dfu[,columns[7]]), max(dfu[,columns[7]]), length=N)
 
 # select two variables
 newdata <- expand.grid(x=uncertainty,y=easeofuse)
