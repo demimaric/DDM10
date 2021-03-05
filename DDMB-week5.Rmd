@@ -143,37 +143,16 @@ Use `ggplot` again to plot this multiple melted correlation matrix, and use `fac
 # First create a correlation matrix per country for only the variables you're interested in
 colnames(df)
 cormat1 <- cor(df[df$country == 1, 159:165], use="pairwise.complete.obs")
-<<<<<<< HEAD
 melted_cormat1 <- melt(round(cormat1,2), na.rm = TRUE)
-ggplot(data = melted_cormat1, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
 
 cormat2 <- cor(df[df$country == 2, 159:165], use="pairwise.complete.obs")
 melted_cormat2 <- melt(round(cormat2,2), na.rm = TRUE)
-ggplot(data = melted_cormat2, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
 
 cormat3 <- cor(df[df$country == 3, 159:165], use="pairwise.complete.obs")
 melted_cormat3 <- melt(round(cormat3,2), na.rm = TRUE)
-ggplot(data = melted_cormat3, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
 
 cormat4 <- cor(df[df$country == 4, 159:165], use="pairwise.complete.obs")
 melted_cormat4 <- melt(round(cormat4,2), na.rm = TRUE)
-ggplot(data = melted_cormat4, aes(x=Var1, y=Var2, fill=value)) + 
-  geom_tile()+
-  geom_text(aes(Var2, Var1, label = value), color = "white", size = 4)
-
-
-
-=======
-cormat2 <- cor(df[df$country == 2, 159:165], use="pairwise.complete.obs")
-cormat3 <- cor(df[df$country == 3, 159:165], use="pairwise.complete.obs")
-cormat4 <- cor(df[df$country == 4, 159:165], use="pairwise.complete.obs")
->>>>>>> 7d53cc35d2bff41cf98a7ef057fab5d3d3a006b4
 
 # melt the correlation matrix into a dataframe
 melted_cormat1 <- cbind(melt(round(cormat1,2), na.rm = TRUE),rep("UK", 49))
