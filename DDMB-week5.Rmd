@@ -248,7 +248,8 @@ Perform the Shapiro–Wilk test on the columns used for LDA and QDA and report y
 
 ```{r}
 # write your code here
-
+shapiro.test(qdatab)
+shapiro.test(ldatab)
 
 ```
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
