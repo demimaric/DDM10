@@ -218,8 +218,8 @@ The next step is that based on the predicted classes and the true labels (i.e. t
 ```{r}
 lda2 <- lda(country ~ pfi + itu + ip + ifl+ unc + pu + peus, testData)
 dfl <- na.omit(testData[,c("country", "pfi", "itu", "ip", "ifl", "unc", "pu", "peus")] )
-table(dfl$country,predict(lda2)$class)
-
+ldatab<-table(dfl$country,predict(lda2)$class)
+ldatab
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
@@ -236,7 +236,8 @@ Now repeat the analysis above with `qda` and compare the results using the accur
 ```{r}
 qda2 <- qda(country ~ pfi + itu + ip + ifl+ unc + pu + peus, testData)
 dfq <- na.omit(testData[,c("country", "pfi", "itu", "ip", "ifl", "unc", "pu", "peus")] )
-table(dfq$country,predict(qda2)$class)
+qdatab<-table(dfq$country,predict(qda2)$class)
+qdatab
 ```
 Could you think of any reason why the accuracy might not be as good as you had hoped?
 
@@ -247,6 +248,7 @@ Perform the Shapiro–Wilk test on the columns used for LDA and QDA and report y
 
 ```{r}
 # write your code here
+
 
 ```
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
