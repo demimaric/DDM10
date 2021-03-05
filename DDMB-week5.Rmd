@@ -227,8 +227,7 @@ ldatab
 
 ----------------------------------------------------------------------------------
 *please elaborate your answer (4-5 sentences) about here*
-
-
+Using aper gives: (11+11+12+101)/(48+48+55+122) = 135/273=0,4945 so the accuracy is 49,5% it is the proportion of misclassified things so it is not a really good number and it is not very accurate
 ----------------------------------------------------------------------------------
 
 Now repeat the analysis above with `qda` and compare the results using the accuracy.
