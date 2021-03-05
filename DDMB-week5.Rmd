@@ -250,14 +250,13 @@ Perform the Shapiro–Wilk test on the columns used for LDA and QDA and report y
 # write your code here
 shapiro.test(qdatab)
 shapiro.test(ldatab)
-
 ```
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
 ### Report the shapiro test results and discuss what this means.
 
 ----------------------------------------------------------------------------------
 *Using the Shaprio-Wilk normality test we notice that none of the columns are normally distributed as all p-values are < 0.05. As a result, given this p-value, we have to conclude that we reject the null hypothesis and conclude there is evidence that these columns are not normally distributed. Although it is known that LDA can handle a violation of these assumption it is an indicator that other methods might be more suitable for this classification problem.*
-
+The p-value of the data used for qda is 6.152e-06 and lda 7.764e-06 which means that they are both <0.05 and so we conclude that we reject the null hypothesis. This means that the data is not normally distributed 
 ----------------------------------------------------------------------------------
 
 Finally, plot the decision boundary of a `qda` and `lda` solution. To do this, it is better to keep it two-dimensional with two variables, and simple with only two groups. This makes the plot easier to understand. Hence, you need to select only two variables, and two countries. If you understand the plot, feel free to play around with the code to include other variables, or more countries.
