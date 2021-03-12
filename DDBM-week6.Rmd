@@ -14,6 +14,8 @@ In this assignment you will work with survey data related to two cultural framew
 
 ```{r}
 # insert your code here
+df<-read.csv("countryvalues.csv")
+colnames(df)
 ```
 
 For this `rmd` to work, you need to also download the pictures and save them in your working directory (change the path below). Hofstede has been developed in the seventies, based on a survey among [employees of IBM](https://www.hofstede-insights.com/models/national-culture/).Schwartz values have been developed on the nineties, based on a survey among [teachers and nurses](http://changingminds.org/explanations/culture/schwartz_culture.htm).
@@ -29,12 +31,16 @@ You will analyze the two cultural frameworks using PCA. As a first step, have a 
 
 ```{r}
 # insert your code here
+Hofstede<-c("POW","IC","MASC","UA","LSO","INDUL")
+cor(df[,Hofstede],use="pairwise.complete.obs")
 ```
 
 Second, inspect values of Schwartz which are in the last set of columns in the dataset. Again, inspect *correlations* and use pairwise deletion.
 
 ```{r}
 # insert your code here
+Schwartz<-c("harmony","embedded","hierarchy","mastery","aff.auton","intel.auton","egalitar")
+cor(df[,Schwartz],use="pairwise.complete.obs")
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
@@ -42,7 +48,7 @@ Second, inspect values of Schwartz which are in the last set of columns in the d
 
 ----------------------------------------------------------------------------------
 *please elaborate your answer (4-5 sentences) about here*
-
+Harmony-mastery:-0.4147199; Egal-Hierarchy:-0.5410628; Embed-Intel auto:-0.8846916; Embed-affect auto:-0.834089876; So yes, the opposite Schwartz values are all negatively correlated and most of it is supported by the data, except for hierarchy since it is more negatively correlated with harmony than mastery. 
 
 ----------------------------------------------------------------------------------
 
@@ -50,13 +56,16 @@ Secondly, compare Hofstede and Schwartz. Calculate the *covariances* this time. 
 
 ```{r}
 # insert your code here
+together <- c("POW","IC","MASC","UA","LSO","INDUL", "harmony","embedded", "hierarchy", "mastery", "aff.auton", "intel.auton", "egalitar")
+covtogether <- cov(df[,together], use="pairwise.complete.obs")
+covtogether
 ```
 
- Make a `heatmap` of the correlations among Hofstede and Schwartz values.
+Make a `heatmap` of the correlations among Hofstede and Schwartz values.
  
 ```{r}
 # insert your code here
-
+heatmap(covtogether)
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
@@ -64,7 +73,7 @@ Secondly, compare Hofstede and Schwartz. Calculate the *covariances* this time. 
 
 ----------------------------------------------------------------------------------
 *please elaborate your answer (4-5 sentences) about here*
-
+On the heatmap they show a low to average correlation which makes sense. For example a low uncertainty avoidance with a high level of power would make sense (orange) but uncertainty avoidance compared to intellectual autonomy would be more opposite of each other, which also shows in the heatmap (yellow)
 
 ----------------------------------------------------------------------------------
 
@@ -72,6 +81,9 @@ Thirdly, conduct PCA. Use `princomp`, manually inspect the loadings and the comp
 
 ```{r}
 # insert your code here
+pca1<-princomp(na.omit(df[,together]), cor=T)
+summary(pca1)
+pca1$loadings
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
@@ -79,7 +91,7 @@ Thirdly, conduct PCA. Use `princomp`, manually inspect the loadings and the comp
 
 ----------------------------------------------------------------------------------
 *please elaborate your answer (4-5 sentences) about here*
-
+Looking at uncertainty avoidance is the most positively related with component 3, it gives the value 0.655 and second best match is LSO with component 2 with 0.612. So I would say that they are the most important.
 
 ----------------------------------------------------------------------------------
 
@@ -87,6 +99,8 @@ Create a simple plot of the datapoints projected on the first two components. Yo
 
 ```{r}
 # insert your code here
+plot(pca1$scores[,1],pca1$scores[,2])
+legend("topright",paste("correlation = ",cor(pca1$scores[,1],pca1$scores[,2])))
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
@@ -102,13 +116,15 @@ Use the function `screeplot` to plot the eigenvalues against the number of the p
 
 ```{r}
 # insert your code here
+screeplot(pca1, npcs = 13)
+abline(h=1, col = "blue")
 ```
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
 ### On the y-axis we have the eigenvalues, any component with an eigenvalue lower than 1 will not be considered, why would this be? 
 
 ----------------------------------------------------------------------------------
 *please elaborate your answer (4-5 sentences) about here*
-
+The eigenvalues says something about the importance of the eigenfactors so I think that under one it is not of much significance. 
 
 ----------------------------------------------------------------------------------
 
@@ -119,13 +135,16 @@ $$ \frac{sd_{c} }{\sum_{c=1}^C(sd_{c})}$$
 Then, plot the cumulative variances of the different components. Draw a line at y = 0.8, implying that we want to explain roughly 80% of the explained variances with the components.   
 ```{r}
 # insert your code here
+cumsum(pca1$sdev^2 / sum(pca1$sdev^2))
+plot(cumsum(pca1$sdev^2 / sum(pca1$sdev^2)), type="b")
+abline(h=0.8, col = "blue")
 ```
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
 ### How many components would we have to use? How much of the variance within the data can we explain with the first two components? 
 
 ----------------------------------------------------------------------------------
 *please elaborate your answer (4-5 sentences) about here*
-
+We have to use 4 components since there is the intersect of both lines. The first two components have the highest eigenvalues and therefore a lot of the variance can be explained with the first two components
 
 ----------------------------------------------------------------------------------
 
@@ -133,12 +152,19 @@ Plot the individuals projected on the first two components using the function `f
 ```{r}
 library(factoextra)
 # insert your code here
+library(factoextra)
+fviz_pca_ind(pca1, axes = c(1, 2), col.ind="cos2", geom = "point",
+   gradient.cols = c("white", "blue", "red" ), ylab = "dim2", xlab = "dim1")
 ```
 
 Plot the variables on all components. Use the function `fviz_pca_biplot` and explain what you see. Compare with the more fancy function `fviz_pca_var`.
 
 ```{r}
 # insert your code here
+fviz_pca_biplot(pca1, axes = c(1, 2), col.ind="cos2", geom = "point",
+   gradient.cols = c("white", "blue", "red" ), ylab = "dim2", xlab = "dim1")
+fviz_pca_var(pca1, axes = c(1, 2), col.ind="cos2", geom = "point",
+   gradient.cols = c("white", "blue", "red" ), ylab = "dim2", xlab = "dim1")
 ```
 
 ## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
@@ -146,6 +172,6 @@ Plot the variables on all components. Use the function `fviz_pca_biplot` and exp
 
 ----------------------------------------------------------------------------------
 *please elaborate your answer (4-5 sentences) about here*
-
+A closer angle correlates higher positive association while the direction shows positive or negative correlation with the dimension. If we look at IC and harmony it would show a high positive correlation which was also the highest 2.96989388 to I think it is inline with the mentioned theory 
 
 ----------------------------------------------------------------------------------
