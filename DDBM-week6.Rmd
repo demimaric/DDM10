@@ -1,0 +1,151 @@
+---
+title: "DDBM-week6"
+author: "Meike Morren"
+date: "20-12-2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_knit$set(root.dir = "") # if you have problems knitting, set your working directory here
+```
+
+In this assignment you will work with survey data related to two cultural frameworks namely Hofstede and Schwartz. You will work with PCA to conduct an analysis and see if we can find appropriate principal components that can express (a part) of this dataset in a lower dimensionality. Read & inspect datafile `countryvalues`. Change first column name to `Country`.
+
+```{r}
+# insert your code here
+```
+
+For this `rmd` to work, you need to also download the pictures and save them in your working directory (change the path below). Hofstede has been developed in the seventies, based on a survey among [employees of IBM](https://www.hofstede-insights.com/models/national-culture/).Schwartz values have been developed on the nineties, based on a survey among [teachers and nurses](http://changingminds.org/explanations/culture/schwartz_culture.htm).
+
+![](Images/hofstede.png)
+
+![](Images/schwartz.jpg)
+
+The images above show the features of interest and their respective counterpart from both Hofstedes perspective as well as Schwartz perspective. We expect that we can group the countries based on the respondents their answers since we can relate these questions to the shown categories. Also, specific parts of the world will have other values than other parts of the world. For example, Asian countries might value hierarchy and mastery more than we Europeans do. These values are measured through a broad range of questions, i.e. the data we will be using.
+
+
+You will analyze the two cultural frameworks using PCA. As a first step, have a look at the *correlations* among Hofstede values in the first 6 columns (excluding the first column country ofcourse). use pairwise deletion to include as many countries as possible for each correlation.
+
+```{r}
+# insert your code here
+```
+
+Second, inspect values of Schwartz which are in the last set of columns in the dataset. Again, inspect *correlations* and use pairwise deletion.
+
+```{r}
+# insert your code here
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Are the opposite Schwartz values negatively correlated? Is the circle shown above supported by the data?
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+Secondly, compare Hofstede and Schwartz. Calculate the *covariances* this time. Can you interpret the coefficients? Compare with correlations. Inspect dimensions that are similar in meaning, such as UA (Uncertainty avoidance, Hofstede) and harmony (Schwartz).  Make a `heatmap`
+
+```{r}
+# insert your code here
+```
+
+ Make a `heatmap` of the correlations among Hofstede and Schwartz values.
+ 
+```{r}
+# insert your code here
+
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Do the variances and co-variances of Uncertainty avoidance, power (hofstede), intellectual autonomy, and embeddedness (schwarz) make sense?
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+Thirdly, conduct PCA. Use `princomp`, manually inspect the loadings and the component scores. Use the listwise deletion by selecting only those rows from the dataframe that contain no missings.
+
+```{r}
+# insert your code here
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Which dimensions are the most important? How would you interpret the first two dimensions?
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+Create a simple plot of the datapoints projected on the first two components. You can obtain the components by `$scores` from the pca object you've created above. And add text
+
+```{r}
+# insert your code here
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Which countries are clustered close together? 
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+Use the function `screeplot` to plot the eigenvalues against the number of the principal component. Also, create a line on y = 1. On the y-axis we have the eigenvalues, any component with an eigenvalue lower than 1 will not be considered, why would this be? 
+
+```{r}
+# insert your code here
+```
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### On the y-axis we have the eigenvalues, any component with an eigenvalue lower than 1 will not be considered, why would this be? 
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+Next you will calculate the cumulative variances of each component c by the following formula:
+
+$$ \frac{sd_{c} }{\sum_{c=1}^C(sd_{c})}$$
+
+Then, plot the cumulative variances of the different components. Draw a line at y = 0.8, implying that we want to explain roughly 80% of the explained variances with the components.   
+```{r}
+# insert your code here
+```
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### How many components would we have to use? How much of the variance within the data can we explain with the first two components? 
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------
+
+Plot the individuals projected on the first two components using the function `fviz_pca_ind` which is part of the library `factoextra`. Use `col.ind = "cos2"` as indicator for quality of representation.  
+```{r}
+library(factoextra)
+# insert your code here
+```
+
+Plot the variables on all components. Use the function `fviz_pca_biplot` and explain what you see. Compare with the more fancy function `fviz_pca_var`.
+
+```{r}
+# insert your code here
+```
+
+## QUESTION TO BE ANSWERED INSIDE RMARKDOWN: 
+### Is this plot in line what we expected? Use the images shown above (Hofstede categories and Schwartz circle) to verify if what you see is inline with the mentioned theory.  
+
+----------------------------------------------------------------------------------
+*please elaborate your answer (4-5 sentences) about here*
+
+
+----------------------------------------------------------------------------------

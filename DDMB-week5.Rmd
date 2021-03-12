@@ -1,8 +1,9 @@
 ---
 title: "Data Driven Decision-Making in Business"
 author: "Meike Morren"
-subtit: 'Week 5'
+subtit: Week 5
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -262,41 +263,6 @@ Finally, plot the decision boundary of a `qda` and `lda` solution. To do this, i
 
 
 ```{r}
-# create decision boundary
-mydata<-df[df$Country==1|df$Country==4,columns[c(2,3,1)]]
-colnames(mydata)<-c("uncertainty","easeofuse", "Country")
-dfu<-na.omit(df[,columns])
-# generate data
-N<-100
-uncertainty  <- seq(min(dfu[,columns[2]]), max(dfu[,columns[2]]), length=N)
-easeofuse  <- seq(min(dfu[,columns[3]]), max(dfu[,columns[3]]), length=N)
-usefulness  <- seq(min(dfu[,columns[4]]), max(dfu[,columns[4]]), length=N)
-image  <- seq(min(dfu[,columns[5]]), max(dfu[,columns[5]]), length=N)
-intention  <- seq(min(dfu[,columns[6]]), max(dfu[,columns[6]]), length=N)
-parents  <- seq(min(dfu[,columns[7]]), max(dfu[,columns[7]]), length=N)
-
-# select two variables
-newdata <- expand.grid(x=uncertainty,y=easeofuse)
-colnames(newdata)<-c("uncertainty","easeofuse")
-
-# predict values for new data & perform the lda on these two variables
-mylda1 <- lda(Country~uncertainty + easeofuse, mydata)
-prd    <- predict(mylda1, newdata=newdata)$class
-
-# plot the data for two variables usefulness and image
-plot(mydata[,1:2], col = mydata$Country)
-points(mylda1$means, pch = "+", cex = 3, col = c("black","blue"))
-contour(x = uncertainty, y = easeofuse, z = matrix(prd,N,N), 
-        levels = c(1,4), add = TRUE, drawlabels = TRUE)
-
-### do the same for qda
-myqda1 <- qda(Country~uncertainty + easeofuse, mydata)
-prd    <- predict(myqda1, newdata=newdata)$class
-
-plot(mydata[,1:2], col = mydata$Country)
-points(myqda1$means, pch = "+", cex = 3, col = c("black","blue"))
-contour(x = uncertainty, y = easeofuse, z = matrix(prd,N,N), 
-        levels = c(1,4), add = TRUE, drawlabels = TRUE)
 
 ```
 
